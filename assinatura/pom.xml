@@ -1,0 +1,156 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.mil.eb.sermil</groupId>
+	<artifactId>assinatura</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+
+	<properties>
+		<java.version>1.8</java.version>
+		<tomcat.version>9.0.0.M6</tomcat.version>
+	</properties>
+
+	<dependencies>
+
+		<!-- demoiselle -->
+		<dependency>
+			<groupId>org.demoiselle.signer</groupId>
+			<artifactId>core</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.openjfx.backport</groupId>
+			<artifactId>openjfx-78-backport</artifactId>
+			<version>1.8.0-ea-b96.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.demoiselle.signer</groupId>
+			<artifactId>signature-signer</artifactId>
+			<version>2.0.0-BETA1</version>
+		</dependency>
+
+		<!-- SPRING -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.3.8.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>4.3.8.RELEASE</version>
+		</dependency>
+
+		<!-- JERSEY -->
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>1.8</version>
+		</dependency>
+
+		<!-- SERMIL -->
+		<dependency>
+			<groupId>br.mil.eb.sermil</groupId>
+			<artifactId>sermil-core</artifactId>
+			<version>5.6.1</version>
+		</dependency>
+
+		<!-- JUNIT -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+
+	</dependencies>
+
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<!-- Build an executable JAR -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-jar-plugin</artifactId> 
+				<version>3.0.2</version> <configuration> <archive> <manifest> <addClasspath>true</addClasspath> 
+				<mainClass>br.eb.mil.sermil.assinatura.Main</mainClass> <classpathPrefix>dependency-jars/</classpathPrefix> 
+				</manifest> </archive> <forceCreation>true</forceCreation> <finalName>ass</finalName> 
+				</configuration> </plugin> -->
+
+			<!-- Java version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<!-- Copy project dependency -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-dependency-plugin</artifactId> 
+				<executions> <execution> <id>copy-dependencies</id> <phase>package</phase> 
+				<goals> <goal>copy-dependencies</goal> </goals> <configuration> <includeScope>runtime</includeScope> 
+				<outputDirectory>${project.build.directory}/dependency-jars/</outputDirectory> 
+				</configuration> </execution> </executions> </plugin> -->
+
+			<!-- esse plugin prepara para rodar em ambiente Windows -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<configuration>
+					<assembleDirectory>target/deployable</assembleDirectory>
+					<programs>
+						<program>
+							<mainClass>br.mil.eb.sermil.assinatura.Main</mainClass>
+							<name>assinatura</name>
+						</program>
+					</programs>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>assemble</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
